@@ -3,7 +3,11 @@ import 'package:http/http.dart' as http;
 
 class ChatService {
   // Change this to your actual API URL
-  static const String baseUrl = 'http://localhost:8000';
+  // Override at build time: --dart-define=CHAT_API_URL=https://example.com/chat
+  static const String baseUrl = String.fromEnvironment(
+    'CHAT_API_URL',
+    defaultValue: 'http://localhost:8000',
+  );
 
   // For Android emulator, use: http://10.0.2.2:8000
   // For iOS simulator, use: http://localhost:8000

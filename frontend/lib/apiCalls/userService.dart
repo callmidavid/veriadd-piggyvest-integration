@@ -4,7 +4,12 @@ import 'dart:convert';
 
 class UserService {
   static const storage = FlutterSecureStorage();
-  static const baseUrl = 'http://localhost:3020/api/v1/';
+  // Same host as AuthService; override with --dart-define=PIGGY_API_URL=...
+  static const _host = String.fromEnvironment(
+    'PIGGY_API_URL',
+    defaultValue: 'http://localhost:3020',
+  );
+  static String get baseUrl => '$_host/api/v1/';
 
   static Future<Map<String, dynamic>> getUser() async {
     try {

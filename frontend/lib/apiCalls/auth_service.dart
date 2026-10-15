@@ -6,6 +6,13 @@ class AuthService {
   // Create an instance of FlutterSecureStorage
   static const storage = FlutterSecureStorage();
 
+  // Override at build time for hosted backends, e.g.
+  // --dart-define=PIGGY_API_URL=https://example.com/piggy
+  static const _host = String.fromEnvironment(
+    'PIGGY_API_URL',
+    defaultValue: 'http://localhost:3020',
+  );
+
   static Future<Map<String, dynamic>> signup({
     required String firstName,
     required String lastName,
@@ -16,7 +23,7 @@ class AuthService {
     required String password,
   }) async {
     try {
-      final url = Uri.parse('http://localhost:3020/api/signup');
+      final url = Uri.parse('$_host/api/signup');
 
       final response = await http.post(
         url,
@@ -47,7 +54,7 @@ class AuthService {
     required String password,
   }) async {
     try {
-      final url = Uri.parse("http://localhost:3020/api/login");
+      final url = Uri.parse("$_host/api/login");
 
       final response = await http.post(
         url,
@@ -81,7 +88,7 @@ class AuthService {
     required String code,
   }) async {
     try {
-      final url = Uri.parse("http://localhost:3020/api/verify-account");
+      final url = Uri.parse("$_host/api/verify-account");
 
       final response = await http.post(
         url,
@@ -105,7 +112,7 @@ class AuthService {
     required String email_or_tell,
   }) async {
     try {
-      final url = Uri.parse("http://localhost:3020/api/resend-verification");
+      final url = Uri.parse("$_host/api/resend-verification");
 
       final response = await http.post(
         url,
